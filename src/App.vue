@@ -5,15 +5,18 @@
     <div class="font-text sm:w-5/6 md:w-4/5 lg:w-3/4">
       <Navbar />
       <router-view />
+      <ErrorToaster />
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import ErrorToaster from '@/components/ErrorToaster'
 
 export default {
   components: {
+    ErrorToaster,
     Navbar
   }
 }

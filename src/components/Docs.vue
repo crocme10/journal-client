@@ -1,7 +1,7 @@
 <template>
   <div class='m-4'> <!-- This wrappes the whole section -->
-    <div class='grid grid-cols-3 gap-4'> <!-- cards are in a 3 column grid -->
-      <div v-for='doc in docs' :key='doc.id' class='relative bg-white border rounded-lg overflow-hidden'>
+    <div class='grid md:grid-cols-3 lg:grid-cols-4 gap-4'> <!-- cards are in a 3 column grid -->
+      <div v-for='doc in docs' :key='doc.id' class='relative bg-gray-100 border rounded-lg shadow overflow-hidden'>
         <a :href='"/doc/" + doc.id'>
           <img :src='"/img/" + doc.image + ".jpg"' :alt='doc.image' class='h-48 w-full object-cover object-top'/>
         </a>
@@ -11,7 +11,7 @@
             <p class='mt-4 text-gray-800 leading-snug'>{{ doc.outline }}</p>
           </a>
           <div class='mt-4 mb-8 flex flex-wrap'>
-            <p v-for='tag in doc.tags' :key='tag' class='bg-gray-200 mt-2 mr-2 px-2 text-xs text-gray-800 rounded-full uppercase font-semibold tracking-wide'>
+            <p v-for='tag in doc.tags' :key='tag' class='bg-gray-300 mt-2 mr-2 px-2 text-xs text-gray-800 rounded-full uppercase font-semibold tracking-wide'>
               {{ tag }}
             </p>
           </div>
@@ -30,11 +30,16 @@ export default {
   created () {
     // If there is no docs in the store, call 'loadDocList'
     if (!this.$store.getters['docs/docs'].length) {
-      // console.log('loading Documents')
-      this.$store.dispatch('docs/loadDocs').then(res => {
-        if (isOk(res)) {
-        }
-      })
+      console.log('loading Documents')
+      try {
+        this.$store.dispatch('docs/loadDocs').then(res => {
+          if (isOk(res)) {
+            console.log('load docs ok')
+          }
+        })
+      } catch (err) {
+        console.log('caught error 1: ' + err)
+      }
     }
   },
   computed: {
@@ -44,11 +49,15 @@ export default {
   },
   methods: {
     formatDate (doc) {
-      const updated = parseISO(doc.updatedAt)
-      if (isValid(updated)) {
-        return format(updated, 'MMM do, yyyy')
-      } else {
-        return ''
+      try {
+        const updated = parseISO(doc.updatedAt)
+        if (isValid(updated)) {
+          return format(updated, 'MMM do, yyyy')
+        } else {
+          return ''
+        }
+      } catch (err) {
+        console.log('format date error: ' + err)
       }
     }
   }

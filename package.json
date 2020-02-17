@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "prod": "vue-cli-service build --mode production",
+    "debug": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -40,7 +41,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.1.2",
-    "less": "^3.0.4",
+    "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "vue-template-compiler": "^2.6.11"
   }
