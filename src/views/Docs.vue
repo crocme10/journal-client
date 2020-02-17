@@ -6,7 +6,7 @@
 import Docs from '@/components/Docs.vue'
 
 export default {
-  name: 'Docs',
+  name: 'docsview',
   components: {
     Docs
   }

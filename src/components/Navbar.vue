@@ -47,7 +47,7 @@ export default {
           console.log('is res ok? ' + res)
           if (isOk(res)) {
             try {
-              this.$router.push('docs')
+              this.$router.push({ name: 'docs' })
               console.log('after push')
             } catch (err) {
               console.log('pushing docs error: ' + err)

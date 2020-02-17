@@ -1,6 +1,7 @@
 <template>
   <div class='m-4'> <!-- This wrappes the whole section -->
-    <div class='grid md:grid-cols-3 lg:grid-cols-4 gap-4'> <!-- cards are in a 3 column grid -->
+    <div v-if="isLoading">Component is loading</div>
+    <div v-else class='grid md:grid-cols-3 lg:grid-cols-4 gap-4'> <!-- cards are in a 3 column grid -->
       <div v-for='doc in docs' :key='doc.id' class='relative bg-gray-100 border rounded-lg shadow overflow-hidden'>
         <a :href='"/doc/" + doc.id'>
           <img :src='"/img/" + doc.image + ".jpg"' :alt='doc.image' class='h-48 w-full object-cover object-top'/>
@@ -23,29 +24,33 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { isOk } from 'result-async'
 import { parseISO, isValid, format } from 'date-fns'
 
 export default {
-  created () {
-    // If there is no docs in the store, call 'loadDocList'
+  name: 'docs',
+  data () {
+    return {
+      isLoading: false
+    }
+  },
+  async created () {
+    // If there is no docs in the store, call 'loadDocs'
     if (!this.$store.getters['docs/docs'].length) {
-      console.log('loading Documents')
-      try {
-        this.$store.dispatch('docs/loadDocs').then(res => {
-          if (isOk(res)) {
-            console.log('load docs ok')
-          }
-        })
-      } catch (err) {
-        console.log('caught error 1: ' + err)
+      this.isLoading = true
+      const res = await this.$store.dispatch('docs/loadDocs')
+      if (isOk(res)) {
+        this.isLoading = false
+      } else {
+        // TODO Launch missile and toaster
       }
     }
   },
   computed: {
-    docs () {
-      return this.$store.getters['docs/docs']
-    }
+    ...mapState({
+      docs: state => state.docs.docs
+    })
   },
   methods: {
     formatDate (doc) {
