@@ -134,7 +134,13 @@ export default {
 
   /* Code */
   .markdown code {
-    @apply py-2 font-code text-sm
+    @apply p-0 font-code text-sm
+  }
+
+  /* Code: special case for diagram, we don't want space between
+   * box characters, so we reduce the line spacing */
+  .markdown code.language-diagram {
+    @apply leading-none inline-block text-base align-middle
   }
 
   .markdown pre {

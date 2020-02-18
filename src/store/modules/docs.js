@@ -111,6 +111,38 @@ const actions = {
     }
   },
 
+  async loadTagSearch ({ commit }, tagStr) {
+    const variables = {
+      tagStr: tagStr
+    }
+    const query = `query($tagStr: String!) {
+      tagSearch(tag: $tagStr) {
+        docs {
+          id, title, outline, author, tags, image, kind, genre, updatedAt
+        }
+      }
+    }`
+
+    try {
+      const response = await http.post({
+        path: 'query',
+        data: JSON.stringify({
+          query: query,
+          variables: variables
+        })
+      })
+
+      if (typeof response.data.errors !== 'undefined') {
+        return error('Invalid GraphQL: ' + response.data.errors[0].message)
+      }
+
+      commit('updateDocs', response.data.data.tagSearch.docs)
+      return ok('ok')
+    } catch (err) {
+      return error(err)
+    }
+  },
+
   async loadDocDetail ({ commit }, id) {
     var variables = {
       id: id
