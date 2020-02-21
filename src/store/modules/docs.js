@@ -121,49 +121,48 @@ const actions = {
   },
 
   async loadDocDetail ({ commit }, id) {
-    var variables = {
-      id: id
-    }
-    var query = `query($id: Uuid!) {
-      docDetail(id: $id) {
-        doc {
-          id, title, outline, author, content, tags, image, kind, genre, updatedAt
+    if (process.env.NODE_ENV === 'test') {
+      try {
+        const response = await http.get('/data/doc.json')
+
+        console.log(response)
+
+        commit('updateDoc', response.data)
+        return ok('ok')
+      } catch (err) {
+        return error(err)
+      }
+    } else {
+      const variables = {
+        id: id
+      }
+      const query = `query($id: Uuid!) {
+        docDetail(id: $id) {
+          doc {
+            id, title, outline, author, content, tags, image, kind, genre, updatedAt
+          }
         }
-      }
-    }`
-    try {
-      const response = await http.post({
-        path: 'query',
-        data: JSON.stringify({
-          query: query,
-          variables: variables
+      }`
+      try {
+        const response = await http.post({
+          path: 'query',
+          data: JSON.stringify({
+            query: query,
+            variables: variables
+          })
         })
-      })
-      // console.log('DocDetail Response: ', response)
+        // console.log('DocDetail Response: ', response)
 
-      if (typeof response.data.errors !== 'undefined') {
-        return error('Invalid GraphQL: ' + response.data.error[0].message)
+        if (typeof response.data.errors !== 'undefined') {
+          return error('Invalid GraphQL: ' + response.data.error[0].message)
+        }
+
+        commit('updateDoc', response.data.data.docDetail.doc)
+
+        return ok('ok')
+      } catch (err) {
+        return error(err)
       }
-
-      commit('updateDoc', response.data.data.docDetail.doc)
-
-      // const doc = {
-      //   id: 'id0',
-      //   title: 'Mimir Indexing Rules',
-      //   outline: 'Learn about indexing rules',
-      //   author: 'Matthieu Paindavoine',
-      //   tags: ['kisio', 'mimirsbrunn', 'elasticsearch'],
-      //   image: 'cabinet',
-      //   kind: 'doc',
-      //   genre: 'reference',
-      //   updatedAt: '2020-01-20',
-      //   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sagittis sodales hendrerit. Fusce quis vestibulum elit, a posuere ipsum. Maecenas pretium, metus nec posuere mollis, massa mauris mattis felis, id convallis nisl nisi ac ex. Maecenas tincidunt risus sed vulputate aliquam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras eget tortor eget libero ultrices luctus ut a turpis. In hac habitasse platea dictumst. Morbi sem urna, ultricies id faucibus at, sagittis vel turpis. Nam lobortis blandit leo sed elementum. Pellentesque facilisis ornare elementum. Etiam efficitur mattis tellus, et ultricies risus tincidunt at. Integer aliquam enim et felis congue volutpat. Cras sapien ipsum, gravida vitae malesuada sed, tincidunt id arcu. Fusce ut turpis scelerisque, tincidunt urna in, maximus mi. Aliquam non molestie urna, ac maximus dui. Maecenas eget neque quis quam dapibus bibendum. Fusce quis efficitur nibh. Pellentesque lobortis tempor pellentesque.'
-      // }
-
-      // commit('updateDoc', doc)
-      return ok('ok')
-    } catch (err) {
-      return error(err)
     }
   }
 }
