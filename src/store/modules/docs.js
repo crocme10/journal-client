@@ -22,60 +22,37 @@ const mutations = {
 
 const actions = {
   async loadDocs ({ commit }) {
-    const query = 'query { docs { docs { id, title, outline, author, tags, image, kind, genre, updatedAt } } }'
-    try {
-      const response = await http.post({
-        path: 'query',
-        data: JSON.stringify({
-          query: query
-        })
-      })
-      // console.log('Docs Response: ', response)
+    // If we need to stub the data...
+    if (process.env.NODE_ENV === 'test') {
+      try {
+        const response = await http.get('/data/docs.json')
 
-      if (typeof response.data.errors !== 'undefined') {
-        return error('Invalid GraphQL: ' + response.data.error[0].message)
+        console.log(response)
+
+        commit('updateDocs', response.data)
+        return ok('ok')
+      } catch (err) {
+        return error(err)
       }
-      commit('updateDocs', response.data.data.docs.docs)
+    } else {
+      const query = 'query { docs { docs { id, title, outline, author, tags, image, kind, genre, updatedAt } } }'
+      try {
+        const response = await http.post({
+          path: 'query',
+          data: JSON.stringify({
+            query: query
+          })
+        })
 
-      // const docs = [
-      //   {
-      //     id: 'id0',
-      //     title: 'Mimir Indexing Rules',
-      //     outline: 'Learn about indexing rules',
-      //     author: 'Matthieu Paindavoine',
-      //     tags: ['kisio', 'mimirsbrunn', 'elasticsearch'],
-      //     image: 'cabinet',
-      //     kind: 'doc',
-      //     genre: 'reference',
-      //     updatedAt: '2020-01-20'
-      //   },
-      //   {
-      //     id: 'id1',
-      //     title: 'Bragi Docker',
-      //     outline: 'Learn about docker',
-      //     author: 'Matthieu Paindavoine',
-      //     tags: ['kisio', 'mimirsbrunn', 'elasticsearch', 'bragi', 'docker'],
-      //     image: 'container',
-      //     kind: 'doc',
-      //     genre: 'reference',
-      //     updatedAt: '2020-01-22'
-      //   },
-      //   {
-      //     id: 'id2',
-      //     title: 'Monitoring Mimirsbrunn',
-      //     outline: 'Building a monitoring website',
-      //     author: 'Matthieu Paindavoine',
-      //     tags: ['kisio', 'mimirsbrunn', 'vue'],
-      //     image: 'cat',
-      //     kind: 'doc',
-      //     genre: 'reference',
-      //     updatedAt: '2020-01-20'
-      //   }
-      // ]
-      // commit('updateDocs', docs)
-      return ok('ok')
-    } catch (err) {
-      return error(err)
+        if (typeof response.data.errors !== 'undefined') {
+          return error('Invalid GraphQL: ' + response.data.error[0].message)
+        }
+        commit('updateDocs', response.data.data.docs.docs)
+
+        return ok('ok')
+      } catch (err) {
+        return error(err)
+      }
     }
   },
 

@@ -67,7 +67,7 @@ export default {
   /* Global */
 
   .markdown {
-    @apply leading-relaxed text-lg
+    @apply leading-relaxed text-lg text-gray-800
   }
 
   /* Headers */
@@ -134,13 +134,13 @@ export default {
 
   /* Code */
   .markdown code {
-    @apply p-0 font-code text-sm
+    @apply p-0 font-code text-base
   }
 
   /* Code: special case for diagram, we don't want space between
    * box characters, so we reduce the line spacing */
   .markdown code.language-diagram {
-    @apply leading-none inline-block text-base align-middle
+    @apply leading-none inline-block align-middle
   }
 
   .markdown pre {
