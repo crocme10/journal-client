@@ -1,10 +1,10 @@
 <template>
-  <div class='m-4'>
-    <img :src='"/img/" + doc.image + ".jpg"' :alt='doc.image' class='h-48 w-full object-cover object-top'/>
-    <div class='container w-full max-w-6xl mx-auto bg-white bg-cover mt-8 rounded' :style='{ backgroundImage: `"/img/" + doc.image + ".jpg"`, height: "5vh"}'></div>
-    <h1 class='mt-8 text-3xl text-center font-header'>{{ doc.title }}</h1>
+  <div class='mt-4'>
+    <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image' class='h-48 w-full object-cover object-top'/>
+    <div class='container w-full max-w-6xl mx-auto bg-white bg-cover mt-8 rounded' :style='{ backgroundImage: `"/img/" + doc.front.image + ".jpg"`, height: "5vh"}'></div>
+    <h1 class='mt-8 text-3xl text-center font-header'>{{ doc.front.title }}</h1>
     <p class='text-gray-800'>{{ doc.updatedAt }}</p>
-    <p class='text-gray-800 mt-4 px-8'>{{ doc.outline }}</p>
+    <p class='text-gray-800 mt-4 px-8'>{{ doc.front.outline }}</p>
     <div class='mt-8 markdown'>
       <div v-html='doc.content' />
     </div>
@@ -22,14 +22,17 @@ export default {
       // We provide a default (empty) doc
       doc: {
         id: '',
-        title: '',
-        outline: '',
-        author: '',
-        tags: [],
-        image: '',
-        kind: '',
-        genre: '',
-        updatedAt: ''
+        front: {
+          title: '',
+          outline: '',
+          author: '',
+          tags: [],
+          image: '',
+          kind: '',
+          genre: ''
+        },
+        updatedAt: '',
+        content: ''
       }
     }
   },

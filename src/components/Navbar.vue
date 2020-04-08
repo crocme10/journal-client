@@ -44,20 +44,20 @@ export default {
     searchHandler () {
       try {
         this.$store.dispatch('docs/loadDocSearch', this.search).then(res => {
-          console.log('is res ok? ' + res)
+          // console.log('is res ok? ' + res)
           if (isOk(res)) {
             try {
               this.$router.push({ name: 'docs' })
-              console.log('after push')
+              // console.log('after push')
             } catch (err) {
-              console.log('pushing docs error: ' + err)
+              // console.log('pushing docs error: ' + err)
             }
           } else {
-            console.log('Error: ' + res.error)
+            // console.log('Error: ' + res.error)
           }
         })
       } catch (err) {
-        console.log('search error: ' + err)
+        // console.log('search error: ' + err)
       }
     }
   }

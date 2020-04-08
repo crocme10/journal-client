@@ -19,7 +19,7 @@ class Markdown {
           try {
             return Highlight.highlight(lang, str).value
           } catch (__) {
-            console.log('Highlight Alert')
+            // console.log('Highlight Alert')
           }
         }
 

@@ -27,7 +27,7 @@ const actions = {
       try {
         const response = await http.get('/data/docs.json')
 
-        console.log(response)
+        // console.log(response)
 
         commit('updateDocs', response.data)
         return ok('ok')
@@ -35,7 +35,7 @@ const actions = {
         return error(err)
       }
     } else {
-      const query = 'query { docs { docs { id, title, outline, author, tags, image, kind, genre, updatedAt } } }'
+      const query = 'query { docs { docs { id, front { title, outline, author, tags, image, kind, genre}, updatedAt } } }'
       try {
         const response = await http.post({
           path: 'query',
@@ -67,7 +67,7 @@ const actions = {
         }
       }
     }`
-    console.log('in loadDocSearch')
+    // console.log('in loadDocSearch')
     try {
       const response = await http.post({
         path: 'query',
@@ -125,7 +125,7 @@ const actions = {
       try {
         const response = await http.get('/data/doc.json')
 
-        console.log(response)
+        // console.log(response)
 
         commit('updateDoc', response.data)
         return ok('ok')
@@ -136,13 +136,15 @@ const actions = {
       const variables = {
         id: id
       }
+
       const query = `query($id: Uuid!) {
-        docDetail(id: $id) {
+        doc(id: $id) {
           doc {
-            id, title, outline, author, content, tags, image, kind, genre, updatedAt
+            id, front { title, outline, author, tags, image, kind, genre, }, updatedAt, content
           }
         }
       }`
+
       try {
         const response = await http.post({
           path: 'query',
@@ -157,7 +159,7 @@ const actions = {
           return error('Invalid GraphQL: ' + response.data.error[0].message)
         }
 
-        commit('updateDoc', response.data.data.docDetail.doc)
+        commit('updateDoc', response.data.data.doc.doc)
 
         return ok('ok')
       } catch (err) {
