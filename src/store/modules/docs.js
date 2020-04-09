@@ -63,7 +63,9 @@ const actions = {
     const query = `query($searchStr: String!) {
       docSearch(search: $searchStr) {
         docs {
-          id, title, outline, author, tags, image, kind, genre, updatedAt
+          id,
+          front { title, outline, author, tags, image, kind, genre},
+          updatedAt
         }
       }
     }`
@@ -95,7 +97,9 @@ const actions = {
     const query = `query($tagStr: String!) {
       tagSearch(tag: $tagStr) {
         docs {
-          id, title, outline, author, tags, image, kind, genre, updatedAt
+          id,
+          front { title, outline, author, tags, image, kind, genre},
+          updatedAt
         }
       }
     }`
