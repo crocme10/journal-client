@@ -68,7 +68,7 @@ export default {
           return ''
         }
       } catch (err) {
-        console.log('format date error: ' + err)
+        // console.log('format date error: ' + err)
       }
     },
     async tagHandler (tag) {
