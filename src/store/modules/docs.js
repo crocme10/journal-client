@@ -25,7 +25,7 @@ const actions = {
     // If we need to stub the data...
     if (process.env.NODE_ENV === 'test') {
       try {
-        const response = await http.get('/data/docs.json')
+        const response = await http.get('/data/banos.json')
 
         // console.log(response)
 
@@ -38,7 +38,7 @@ const actions = {
       const query = 'query { docs { docs { id, front { title, outline, author, tags, image, kind, genre}, updatedAt } } }'
       try {
         const response = await http.post({
-          path: 'query',
+          path: '/graphql/query',
           data: JSON.stringify({
             query: query
           })
@@ -72,7 +72,7 @@ const actions = {
     // console.log('in loadDocSearch')
     try {
       const response = await http.post({
-        path: 'query',
+        path: '/graphql/query',
         data: JSON.stringify({
           query: query,
           variables: variables
@@ -106,7 +106,7 @@ const actions = {
 
     try {
       const response = await http.post({
-        path: 'query',
+        path: '/graphql/query',
         data: JSON.stringify({
           query: query,
           variables: variables
@@ -151,7 +151,7 @@ const actions = {
 
       try {
         const response = await http.post({
-          path: 'query',
+          path: '/graphql/query',
           data: JSON.stringify({
             query: query,
             variables: variables

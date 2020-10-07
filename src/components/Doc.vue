@@ -1,10 +1,10 @@
 <template>
   <div class='mt-4'>
     <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image' class='h-48 w-full object-cover object-top'/>
-    <div class='container w-full max-w-6xl mx-auto bg-white bg-cover mt-8 rounded' :style='{ backgroundImage: `"/img/" + doc.front.image + ".jpg"`, height: "5vh"}'></div>
-    <h1 class='mt-8 text-3xl text-center font-header'>{{ doc.front.title }}</h1>
+    <!--<div class='container w-full max-w-6xl mx-auto bg-white bg-cover mt-8 rounded' :style='{ backgroundImage: `"/img/" + doc.front.image + ".jpg"`, height: "5vh"}'></div>-->
+    <h1 class='mt-4 mb-8 text-4xl text-center font-header font-bold'>{{ doc.front.title }}</h1>
     <p class='text-gray-800'>{{ doc.updatedAt }}</p>
-    <p class='text-gray-800 mt-4 px-8'>{{ doc.front.outline }}</p>
+    <p class='text-gray-600 mt-4 mb-8 px-8 text-lg'>{{ doc.front.outline }}</p>
     <div class='mt-8 markdown'>
       <div v-html='doc.content' />
     </div>
@@ -74,15 +74,23 @@ export default {
   }
 
   /* Headers */
-  .markdown h1,
-  .markdown h2 {
-    @apply text-2xl my-6 font-bold
+  .markdown h1 {
+    @apply text-4xl my-6 font-header font-bold
   }
-  .markdown h3,
-  .markdown h4,
-  .markdown h5,
+  .markdown h2 {
+    @apply text-3xl my-6 font-header font-bold
+  }
+  .markdown h3 {
+    @apply text-2xl my-4 font-header font-semibold
+  }
+  .markdown h4 {
+    @apply text-xl my-4 font-header font-semibold
+  }
+  .markdown h5 {
+    @apply text-xl my-4 font-header font-medium
+  }
   .markdown h6 {
-    @apply text-xl my-3 font-semibold
+    @apply text-lg my-3 font-header font-medium
   }
 
   /* Links */
@@ -123,7 +131,15 @@ export default {
     @apply mb-0
   }
 
+  /* Images */
+  .markdown img {
+    @apply mx-auto
+  }
+
   /* Tables */
+  .markdown table {
+    @apply mx-auto
+  }
   .markdown td,
   .markdown th {
     @apply px-2 py-1 border border-gray-400

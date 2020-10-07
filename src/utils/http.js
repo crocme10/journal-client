@@ -3,7 +3,7 @@ import axios from 'axios'
 class Http {
   constructor () {
     const service = axios.create({
-      baseURL: (process.env.NODE_ENV === 'test' ? 'http://127.0.0.1:8080' : 'https://www.brunn.dev/graphql'),
+      // baseURL: (process.env.NODE_ENV === 'test' ? 'http://127.0.0.1:8080' : 'https://mimirs.brunn.dev/graphql'),
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
