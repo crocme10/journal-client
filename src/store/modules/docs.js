@@ -22,37 +22,23 @@ const mutations = {
 
 const actions = {
   async loadDocs ({ commit }) {
-    // If we need to stub the data...
-    if (process.env.NODE_ENV === 'test') {
-      try {
-        const response = await http.get('/data/banos.json')
-
-        // console.log(response)
-
-        commit('updateDocs', response.data)
-        return ok('ok')
-      } catch (err) {
-        return error(err)
-      }
-    } else {
-      const query = 'query { docs { docs { id, front { title, outline, author, tags, image, kind, genre}, updatedAt } } }'
-      try {
-        const response = await http.post({
-          path: '/graphql/query',
-          data: JSON.stringify({
-            query: query
-          })
+    const query = 'query { docs { docs { id, front { title, outline, author, tags, image, kind, genre}, updatedAt } } }'
+    try {
+      const response = await http.post({
+        path: '/graphql/query',
+        data: JSON.stringify({
+          query: query
         })
+      })
 
-        if (typeof response.data.errors !== 'undefined') {
-          return error('Invalid GraphQL: ' + response.data.error[0].message)
-        }
-        commit('updateDocs', response.data.data.docs.docs)
-
-        return ok('ok')
-      } catch (err) {
-        return error(err)
+      if (typeof response.data.errors !== 'undefined') {
+        return error('Invalid GraphQL: ' + response.data.error[0].message)
       }
+      commit('updateDocs', response.data.data.docs.docs)
+
+      return ok('ok')
+    } catch (err) {
+      return error(err)
     }
   },
 

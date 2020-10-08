@@ -33,9 +33,16 @@ module.exports = {
         '9/12': '75%',
         '10/12': '83.333333%',
         '11/12': '91.666667%'
+      },
+      colors: {
+        primary: {
+          light: "#fefcbf", // For lighter primary color
+          default: "#b7791f", // Normal primary color
+          dark: "#744210", // Used for hover, active, etc.
+        }
       }
     }
   },
   variants: {},
-  plugins: []
+  plugins: [require("kutty")]
 }

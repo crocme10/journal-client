@@ -1,41 +1,43 @@
 <template>
-  <div class='m-4'> <!-- This wrappes the whole section -->
-    <div v-if="isLoading">
-      <Spinner />
-    </div>
-    <div v-else class='grid md:grid-cols-3 gap-4'> <!-- cards are in a 3 column grid -->
-      <div v-for='doc in docs' :key='doc.id' class='relative bg-gray-100 border rounded-lg shadow overflow-hidden'>
+  <section class="container mx-auto py-24 px-4">
+    <h2 class="text-3xl text-gray-900 leading-tight mb-2 font-extrabold">Skcript Blog</h2>
+    <p class="text-lg text-gray-600 mb-20">Comes directly from the desk of engineers, creators and managers at Skcript.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-12">
+      <div v-for='doc in docs' :key='doc.id'>
         <a :href='"/doc/" + doc.id'>
-          <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image' class='h-48 w-full object-cover object-top'/>
+          <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image'
+            class="object-cover bg-center h-56 w-full rounded mb-5" loading="lazy" />
         </a>
-        <div class='p-4'>
-          <a :href='"/doc/" + doc.id'>
-            <h4 class='font-header text-lg font-bold text-center'>{{ doc.front.title }}</h4>
-            <p class='mt-4 text-gray-800 leading-snug'>{{ doc.front.outline }}</p>
-          </a>
-          <div class='mt-4 mb-8 flex flex-wrap'>
-            <button v-for='tag in doc.front.tags' :key='tag' @click="tagHandler(tag)" class='bg-gray-300 mt-2 mr-2 px-2 text-xs text-gray-800 rounded-full uppercase font-semibold tracking-wide'>
-              {{ tag }}
-            </button>
-          </div>
-          <p class='absolute bottom-0 right-0 mr-4 mb-4 bg-gray-700 px-2 text-xs text-white rounded-full uppercase font-semibold tracking-wide'>{{ doc.front.genre }}</p>
+        <h2 class="text-gray-900 text-lg font-semibold mb-2">
+          <a href="#" class="text-gray-900 hover:text-purple-700">{{ doc.front.title }}</a>
+        </h2>
+        <p class="text-sm text-gray-600 font-normal mb-3">{{ doc.front.outline }}</p>
+        <p class="text-sm text-gray-600 font-normal mb-3">
+          <a href="#" class="text-gray-900 hover:text-purple-700 font-medium">Praveen Juge</a>
+          April 16, 2020
+        </p>
+        <div class='mt-4 mb-8 flex flex-wrap'>
+          <button v-for='tag in doc.front.tags' :key='tag' @click="tagHandler(tag)" class='bg-gray-300 mt-2 mr-2 px-2 text-xs text-gray-800 rounded-full uppercase font-semibold tracking-wide'>
+            {{ tag }}
+          </button>
         </div>
+        <p class='absolute bottom-0 right-0 mr-4 mb-4 bg-gray-700 px-2 text-xs text-white rounded-full uppercase font-semibold tracking-wide'>{{ doc.front.genre }}</p>
       </div>
     </div>
-  </div>
+    <div class="flex items-center justify-center space-x-0 md:space-x-2 space-y-2 md:space-y-0 mt-20 flex-col md:flex-row">
+      <a href="#" class="btn btn-light btn-xl rounded-full w-full md:w-auto">Previous Page</a>
+      <a href="#" class="btn btn-light btn-xl rounded-full w-full md:w-auto">Next Page</a>
+    </div>
+  </section>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { isOk } from 'result-async'
 import { parseISO, isValid, format } from 'date-fns'
-import Spinner from '@/components/Spinner'
 
 export default {
   name: 'docs',
-  components: {
-    Spinner
-  },
   data () {
     return {
       isLoading: false
