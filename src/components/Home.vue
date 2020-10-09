@@ -1,12 +1,14 @@
 <template>
-  <Docs />
+  <div>
+    <Docs />
+  </div>
 </template>
 
 <script>
-import Docs from '@/components/Docs.vue'
+import Docs from '@/components/Docs'
 
 export default {
-  name: 'docsview',
+  name: 'Home',
   components: {
     Docs
   }

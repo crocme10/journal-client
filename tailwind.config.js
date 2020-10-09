@@ -1,4 +1,8 @@
 module.exports = {
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true
+  },
   theme: {
     fontFamily: {
       text: ['ZillaSlab'],
@@ -36,13 +40,16 @@ module.exports = {
       },
       colors: {
         primary: {
-          light: "#fefcbf", // For lighter primary color
-          default: "#b7791f", // Normal primary color
-          dark: "#744210", // Used for hover, active, etc.
+          light: '#5885AF', // For lighter primary color
+          default: '#41729F', // Normal primary color
+          dark: '#274472' // Used for hover, active, etc.
         }
       }
     }
   },
+  purge: [
+    './src/components/**/*.vue'
+  ],
   variants: {},
-  plugins: [require("kutty")]
+  plugins: [require('kutty')]
 }

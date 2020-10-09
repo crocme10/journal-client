@@ -1,22 +1,38 @@
 <template>
-  <div class='mt-4'>
-    <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image' class='h-48 w-full object-cover object-top'/>
-    <!--<div class='container w-full max-w-6xl mx-auto bg-white bg-cover mt-8 rounded' :style='{ backgroundImage: `"/img/" + doc.front.image + ".jpg"`, height: "5vh"}'></div>-->
-    <h1 class='mt-4 mb-8 text-4xl text-center font-header font-bold'>{{ doc.front.title }}</h1>
-    <p class='text-gray-800'>{{ doc.updatedAt }}</p>
-    <p class='text-gray-600 mt-4 mb-8 px-8 text-lg'>{{ doc.front.outline }}</p>
-    <div class='mt-8 markdown'>
+  <article class="container mx-auto py-24 px-4" itemid="#" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="w-full md:w-10/12 lg:w-3/4 mx-auto text-left mb-12">
+      <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image' class="object-cover bg-center h-64 w-full rounded-lg" />
+      <p class="mt-6 mb-2 text-primary uppercase tracking-wider font-semibold text-xs">Development</p>
+      <h1 class="text-3xl md:text-4xl text-gray-900 leading-tight mb-3 font-bold" itemprop="headline" title="Rise of Tailwind - A Utility First CSS Framework">
+        {{ doc.front.title }}
+      </h1>
+      <div class="flex space-x-2 mb-6">
+        <a v-for='tag in doc.front.tags' :key='tag' class="badge badge-light" href="#">{{ tag }}</a>
+      </div>
+      <a class="text-gray-700 flex items-center" href="#">
+        <!-- FIXME Get Avatar pic <div class="avatar"><img src="/placeholder.jpg" alt="Photo of Praveen Juge" /></div> -->
+        <div class="ml-2">
+          <!-- FIXME Get Author name <p class="text-base font-semibold text-gray-900">{{ doc.front.author }}</p>-->
+          <p class="text-base text-gray-600">Updated {{ doc.updatedAt }}</p>
+        </div>
+      </a>
+    </div>
+    <div class="doc w-full md:w-10/12 lg:w-3/4 prose mx-auto font-text text-lg">
       <div v-html='doc.content' />
     </div>
-  </div>
+  </article>
 </template>
 
 <script>
-import { isOk } from 'result-async'
+import { mapActions } from 'vuex'
 import { parseISO, isValid, format } from 'date-fns'
 import markdown from '@/utils/markdown'
 
 export default {
+  name: 'doc',
+  props: {
+    id: String
+  },
   data () {
     return {
       // We provide a default (empty) doc
@@ -36,38 +52,37 @@ export default {
       }
     }
   },
-  created () {
-    this.$store.dispatch('docs/loadDocDetail', this.id).then(res => {
-      if (isOk(res)) {
-        this.doc = this.$store.getters['docs/doc']
-        this.doc.content = markdown.render(this.doc.content)
-        const updated = parseISO(this.doc.updatedAt)
-        if (isValid(updated)) {
-          this.doc.updatedAt = format(updated, 'MMM do, yyyy')
-        } else {
-          this.doc.updatedAt = ''
-        }
-        // console.log('Load DocDetails Success.')
-      } else {
-        // console.log('Load DocDetails Error: ', res.error)
-      }
+  methods: {
+    ...mapActions({
+      loadDocDetails: 'docs/loadDocDetails'
     })
   },
-  props: {
-    id: String
+  async created () {
+    await this.loadDocDetails(this.id)
+    this.doc = this.$store.getters['docs/doc']
+    this.doc.content = markdown.render(this.doc.content)
+    const updated = parseISO(this.doc.updatedAt)
+    if (isValid(updated)) {
+      this.doc.updatedAt = format(updated, 'MMM do, yyyy')
+    } else {
+      this.doc.updatedAt = ''
+    }
   }
 }
 </script>
 
 <style>
-  /* .doc h1, .doc h2, .doc h3, .doc h4 {
-     @apply font-header
-     }
-  */
+  .doc h1, .doc h2, .doc h3, .doc h4 {
+    @apply font-header
+  }
 
   /* purgecss start ignore */
   /* Markdown Styles */
   /* Global */
+
+  .prose {
+    max-width: 80ch;
+  }
 
   .markdown {
     @apply leading-relaxed text-lg text-gray-800

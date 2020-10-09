@@ -1,5 +1,4 @@
-import http from '@/utils/http'
-import { ok, error } from 'result-async'
+import DocsService from '@/services/docs.service'
 
 const state = {
   docs: [],
@@ -7,8 +6,8 @@ const state = {
 }
 
 const getters = {
-  doc: state => state.doc,
-  docs: state => state.docs
+  docs: state => state.docs,
+  doc: state => state.doc
 }
 
 const mutations = {
@@ -21,141 +20,64 @@ const mutations = {
 }
 
 const actions = {
-  async loadDocs ({ commit }) {
-    const query = 'query { docs { docs { id, front { title, outline, author, tags, image, kind, genre}, updatedAt } } }'
-    try {
-      const response = await http.post({
-        path: '/graphql/query',
-        data: JSON.stringify({
-          query: query
-        })
-      })
-
-      if (typeof response.data.errors !== 'undefined') {
-        return error('Invalid GraphQL: ' + response.data.error[0].message)
+  loadDocs: async ({ dispatch, commit }) => {
+    return DocsService.load().then(
+      response => {
+        if (response.data.errors) {
+          const errmsg = response.data.errors[0].message + ': ' + response.data.errors[0].extensions.internal_error
+          console.log('Server error loading documents: ' + errmsg)
+          dispatch('notifications/addNotification',
+            {
+              title: 'Server Error loading documents',
+              message: errmsg,
+              theme: 'error',
+              timeout: 5000
+            },
+            { root: true }
+          )
+          // commit('registerFailure')
+          return Promise.reject(response.data.errors[0])
+        } else {
+          const docs = response.data.data.docs.docs
+          commit('updateDocs', docs)
+          return Promise.resolve(docs)
+        }
+      },
+      error => {
+        console.log('Server error loading documents: ' + error)
+        return Promise.reject(error)
       }
-      commit('updateDocs', response.data.data.docs.docs)
-
-      return ok('ok')
-    } catch (err) {
-      return error(err)
-    }
+    )
   },
 
-  async loadDocSearch ({ commit }, searchStr) {
-    const variables = {
-      searchStr: searchStr
-    }
-    const query = `query($searchStr: String!) {
-      docSearch(search: $searchStr) {
-        docs {
-          id,
-          front { title, outline, author, tags, image, kind, genre},
-          updatedAt
+  loadDocDetails: async ({ dispatch, commit }, id) => {
+    return DocsService.loadDetails(id).then(
+      response => {
+        if (response.data.errors) {
+          const errmsg = response.data.errors[0].message + ': ' + response.data.errors[0].extensions.internal_error
+          console.log('Server error loading document details: ' + errmsg)
+          dispatch('notifications/addNotification',
+            {
+              title: 'Server Error loading document details',
+              message: errmsg,
+              theme: 'error',
+              timeout: 5000
+            },
+            { root: true }
+          )
+          // commit('registerFailure')
+          return Promise.reject(response.data.errors[0])
+        } else {
+          const doc = response.data.data.doc.doc
+          commit('updateDoc', doc)
+          return Promise.resolve(doc)
         }
+      },
+      error => {
+        console.log('Server error loading document details: ' + error)
+        return Promise.reject(error)
       }
-    }`
-    // console.log('in loadDocSearch')
-    try {
-      const response = await http.post({
-        path: '/graphql/query',
-        data: JSON.stringify({
-          query: query,
-          variables: variables
-        })
-      })
-
-      if (typeof response.data.errors !== 'undefined') {
-        return error('Invalid GraphQL: ' + response.data.errors[0].message)
-      }
-
-      commit('updateDocs', response.data.data.docSearch.docs)
-      return ok('ok')
-    } catch (err) {
-      return error(err)
-    }
-  },
-
-  async loadTagSearch ({ commit }, tagStr) {
-    const variables = {
-      tagStr: tagStr
-    }
-    const query = `query($tagStr: String!) {
-      tagSearch(tag: $tagStr) {
-        docs {
-          id,
-          front { title, outline, author, tags, image, kind, genre},
-          updatedAt
-        }
-      }
-    }`
-
-    try {
-      const response = await http.post({
-        path: '/graphql/query',
-        data: JSON.stringify({
-          query: query,
-          variables: variables
-        })
-      })
-
-      if (typeof response.data.errors !== 'undefined') {
-        return error('Invalid GraphQL: ' + response.data.errors[0].message)
-      }
-
-      commit('updateDocs', response.data.data.tagSearch.docs)
-      return ok('ok')
-    } catch (err) {
-      return error(err)
-    }
-  },
-
-  async loadDocDetail ({ commit }, id) {
-    if (process.env.NODE_ENV === 'test') {
-      try {
-        const response = await http.get('/data/doc.json')
-
-        // console.log(response)
-
-        commit('updateDoc', response.data)
-        return ok('ok')
-      } catch (err) {
-        return error(err)
-      }
-    } else {
-      const variables = {
-        id: id
-      }
-
-      const query = `query($id: Uuid!) {
-        doc(id: $id) {
-          doc {
-            id, front { title, outline, author, tags, image, kind, genre, }, updatedAt, content
-          }
-        }
-      }`
-
-      try {
-        const response = await http.post({
-          path: '/graphql/query',
-          data: JSON.stringify({
-            query: query,
-            variables: variables
-          })
-        })
-        // console.log('DocDetail Response: ', response)
-
-        if (typeof response.data.errors !== 'undefined') {
-          return error('Invalid GraphQL: ' + response.data.error[0].message)
-        }
-
-        commit('updateDoc', response.data.data.doc.doc)
-
-        return ok('ok')
-      } catch (err) {
-        return error(err)
-      }
-    }
+    )
   }
 }
 

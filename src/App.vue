@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <Navbar />
-    <router-view />
-    <ErrorToaster />
+    <NavBar />
+    <router-view/>
+    <Notifications />
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
-import ErrorToaster from '@/components/ErrorToaster'
+import Notifications from '@/components/Util/Notifications'
+import NavBar from '@/components/NavBar'
 
 export default {
+  name: 'App',
   components: {
-    ErrorToaster,
-    Navbar
+    NavBar,
+    Notifications
   }
 }
 </script>
