@@ -7,7 +7,7 @@
         {{ doc.front.title }}
       </h1>
       <div class="flex space-x-2 mb-6">
-        <a v-for='tag in doc.front.tags' :key='tag' class="badge badge-light" href="#">{{ tag }}</a>
+        <a v-for='tag in doc.front.tags' :key='tag' class="badge badge-light text-header text-base" href="#">{{ tag }}</a>
       </div>
       <a class="text-gray-700 flex items-center" href="#">
         <!-- FIXME Get Avatar pic <div class="avatar"><img src="/placeholder.jpg" alt="Photo of Praveen Juge" /></div> -->
@@ -17,7 +17,7 @@
         </div>
       </a>
     </div>
-    <div class="doc w-full md:w-10/12 lg:w-3/4 prose mx-auto font-text text-lg">
+    <div class="doc w-full md:w-10/12 lg:w-3/4 prose mx-auto font-text text-base">
       <div v-html='doc.content' />
     </div>
   </article>

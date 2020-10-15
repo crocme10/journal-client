@@ -9,6 +9,17 @@ module.exports = {
       header: ['Muli'],
       code: ['Iosevka']
     },
+    fontSize: {
+      'xs': '.5rem',
+      'sm': '.75rem',
+      'tiny': '1rem',
+      'base': '1.25rem',
+      'lg': '1.75rem',
+      'xl': '2rem',
+      '2xl': '3rem',
+      '3xl': '4rem',
+      '4xl': '6rem',
+    },
     extend: {
       spacing: {
         '1/2': '50%',
