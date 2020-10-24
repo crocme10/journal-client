@@ -1,8 +1,7 @@
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
-// import MarkdownItAttrs from 'markdown-it-attrs'
 import MarkdownItTocDoneRight from 'markdown-it-toc-done-right'
-import MarkdownItKaTeX from '@iktakahiro/markdown-it-katex'
+import MarkdownItMathJax from 'markdown-it-mathjax'
 import MarkdownItGridTables from 'markdown-it-gridtables'
 import Highlight from 'highlight.js'
 
@@ -33,7 +32,7 @@ class Markdown {
       permalinkSymbol: '§'
     })
 
-    md.use(MarkdownItKaTeX)
+    md.use(MarkdownItMathJax)
 
     md.use(MarkdownItGridTables)
 

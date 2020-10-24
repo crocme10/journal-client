@@ -10,7 +10,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@iktakahiro/markdown-it-katex": "^4.0.1",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
@@ -21,7 +20,7 @@
     "markdown-it": "^10.0.0",
     "markdown-it-anchor": "^5.3.0",
     "markdown-it-gridtables": "^0.2.2",
-    "markdown-it-katex": "^2.0.3",
+    "markdown-it-mathjax": "^0.1.0",
     "markdown-it-toc-done-right": "^4.1.0",
     "mathjax-full": "^3.1.2",
     "moment": "^2.29.1",
