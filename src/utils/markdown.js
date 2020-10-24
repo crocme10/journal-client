@@ -2,7 +2,7 @@ import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
 // import MarkdownItAttrs from 'markdown-it-attrs'
 import MarkdownItTocDoneRight from 'markdown-it-toc-done-right'
-import MarkdownItKaTeX from 'markdown-it-katex'
+import MarkdownItKaTeX from '@iktakahiro/markdown-it-katex'
 import MarkdownItGridTables from 'markdown-it-gridtables'
 import Highlight from 'highlight.js'
 

@@ -4,11 +4,11 @@ import ApiRoutes from '@/api/apiRoutes'
 
 class DocsService {
   load () {
+    console.log(ApiRoutes.JournalGraphQL)
     const query = `query {
-      docs {
+      documents {
         docs {
-          id, front { title, outline, author, tags, image, kind, genre},
-          updatedAt
+          id, front { title, outline, author, tags, image, kind, genre, updatedAt},
         }
       }
     }`
@@ -28,9 +28,9 @@ class DocsService {
       id: id
     }
     const query = `query($id: Uuid!) {
-      doc(id: $id) {
+      findDocumentById(id: $id) {
         doc {
-          id, front { title, outline, author, tags, image, kind, genre, }, updatedAt, content
+          id, front { title, outline, author, tags, image, kind, genre, updatedAt}, content
         }
       }
     }`
