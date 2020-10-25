@@ -72,6 +72,11 @@ export default {
 </script>
 
 <style>
+
+  mjx-container svg {
+    display: inline;
+  }
+
   .doc h1, .doc h2, .doc h3, .doc h4 {
     @apply font-header
   }

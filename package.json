@@ -20,7 +20,7 @@
     "markdown-it": "^10.0.0",
     "markdown-it-anchor": "^5.3.0",
     "markdown-it-gridtables": "^0.2.2",
-    "markdown-it-mathjax": "^0.1.0",
+    "@area403/markdown-it-mathjax": "^1.0.0",
     "markdown-it-toc-done-right": "^4.1.0",
     "mathjax-full": "^3.1.2",
     "moment": "^2.29.1",
