@@ -73,6 +73,10 @@ export default {
 
 <style>
 
+  .prose img {
+    @apply mx-auto;
+  }
+
   mjx-container svg {
     display: inline;
   }

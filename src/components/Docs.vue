@@ -9,7 +9,7 @@
             class="object-cover bg-center h-56 w-full rounded mb-5" loading="lazy" />
         </a>
         <h2 class="text-gray-900 text-lg font-semibold mb-2">
-          <a href="#" class="text-gray-900 hover:text-purple-700">{{ doc.front.title }}</a>
+          <a :href='"/doc/" + doc.id' class="text-gray-900 hover:text-purple-700">{{ doc.front.title }}</a>
         </h2>
         <p class="text-sm text-gray-600 font-normal mb-3">{{ doc.front.outline }}</p>
         <p class="text-sm text-gray-600 font-normal mb-3">
