@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
 import MarkdownItTocDoneRight from 'markdown-it-toc-done-right'
-import MarkdownItMathJax from 'markdown-it-mathjax'
+import MarkdownItMathJax from '@area403/markdown-it-mathjax'
 import MarkdownItGridTables from 'markdown-it-gridtables'
 import Highlight from 'highlight.js'
 
