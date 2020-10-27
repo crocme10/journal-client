@@ -16,6 +16,7 @@ RUN npm install
 COPY . .
 
 # build app for development
+RUN npm install -g @vue/cli
 RUN npm run build -- --mode development
 
 EXPOSE 8080
