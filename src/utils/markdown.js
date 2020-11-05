@@ -10,7 +10,7 @@ class Markdown {
     const md = new MarkdownIt({
       preset: 'default',
       linkify: false,
-      html: false,
+      html: true,
       xhtmlOut: true,
       typographer: true,
       highlight: function (str, lang) {
