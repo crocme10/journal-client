@@ -17,7 +17,7 @@
         </div>
       </a>
     </div>
-    <div class="doc w-full md:w-10/12 lg:w-3/4 prose mx-auto font-text text-base">
+    <div class="markdown w-full md:w-10/12 lg:w-3/4 prose mx-auto">
       <div v-html='doc.content' />
     </div>
   </article>
@@ -81,10 +81,6 @@ export default {
     display: inline;
   }
 
-  .doc h1, .doc h2, .doc h3, .doc h4 {
-    @apply font-header
-  }
-
   /* purgecss start ignore */
   /* Markdown Styles */
   /* Global */
@@ -94,27 +90,21 @@ export default {
   }
 
   .markdown {
-    @apply leading-relaxed text-lg text-gray-800
+    @apply leading-relaxed text-lg text-gray-800 font-text text-lg
   }
 
   /* Headers */
   .markdown h1 {
-    @apply text-4xl my-6 font-header font-bold
+    @apply text-3xl my-6 font-header font-light
   }
   .markdown h2 {
-    @apply text-3xl my-6 font-header font-bold
+    @apply text-2xl my-6 font-header font-light
   }
   .markdown h3 {
-    @apply text-2xl my-4 font-header font-semibold
+    @apply text-xl my-4 font-header font-normal
   }
   .markdown h4 {
-    @apply text-xl my-4 font-header font-semibold
-  }
-  .markdown h5 {
-    @apply text-xl my-4 font-header font-medium
-  }
-  .markdown h6 {
-    @apply text-lg my-3 font-header font-medium
+    @apply text-lg my-4 font-header font-medium
   }
 
   /* Links */
@@ -140,12 +130,15 @@ export default {
   .markdown li > ol {
     @apply mb-0
   }
+
+  /*
   .markdown ol {
     @apply list-decimal
   }
   .markdown ul {
     @apply list-disc
   }
+  */
 
   /* Blockquotes */
   .markdown blockquote {
@@ -177,7 +170,12 @@ export default {
 
   /* Code */
   .markdown code {
-    @apply p-0 font-code text-base
+    @apply p-0 font-code font-normal text-sm
+  }
+
+  /* This is to fix an extra space at the bottom of the code section. */
+  .prose code::after, .prose pre code::after {
+    display: none;
   }
 
   /* Code: special case for diagram, we don't want space between
@@ -187,11 +185,7 @@ export default {
   }
 
   .markdown pre {
-    @apply bg-gray-200 border
-  }
-
-  .markdown pre {
-    @apply font-code rounded-none block px-4 py-2 whitespace-pre
+    @apply bg-gray-200 border text-gray-900 font-code rounded-none block px-4 py-2 whitespace-pre
   }
 
   /* Base16 Atelier Estuary Light - Theme */
