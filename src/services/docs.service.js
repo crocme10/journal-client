@@ -3,10 +3,50 @@ import standardHeaders from './standard.headers'
 import ApiRoutes from '@/api/apiRoutes'
 
 class DocsService {
-  load () {
+  loadDocs () {
     console.log(ApiRoutes.JournalGraphQL)
     const query = `query {
       listDocuments {
+        docs {
+          id,
+          front {
+            title,
+            outline,
+            author {
+              fullname,
+              resource
+            },
+            tags,
+            image {
+              title,
+              author {
+                fullname,
+                resource
+              },
+              resource
+            }
+            kind,
+            genre,
+            updatedAt
+          }
+        }
+      }
+    }`
+
+    return axios({
+      method: 'post',
+      headers: standardHeaders(),
+      url: ApiRoutes.JournalGraphQL,
+      data: JSON.stringify({
+        query: query
+      })
+    })
+  }
+
+  loadPosts () {
+    console.log(ApiRoutes.JournalGraphQL)
+    const query = `query {
+      listPosts {
         docs {
           id,
           front {

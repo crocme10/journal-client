@@ -21,7 +21,7 @@ const mutations = {
 
 const actions = {
   loadDocs: async ({ dispatch, commit }) => {
-    return DocsService.load().then(
+    return DocsService.loadDocs().then(
       response => {
         if (response.data.errors) {
           const errmsg = response.data.errors[0].message + ': ' + response.data.errors[0].extensions.internal_error
@@ -39,6 +39,36 @@ const actions = {
           return Promise.reject(response.data.errors[0])
         } else {
           const docs = response.data.data.listDocuments.docs
+          commit('updateDocs', docs)
+          return Promise.resolve(docs)
+        }
+      },
+      error => {
+        console.log('Server error loading documents: ' + error)
+        return Promise.reject(error)
+      }
+    )
+  },
+
+  loadPosts: async ({ dispatch, commit }) => {
+    return DocsService.loadPosts().then(
+      response => {
+        if (response.data.errors) {
+          const errmsg = response.data.errors[0].message + ': ' + response.data.errors[0].extensions.internal_error
+          console.log('Server error loading documents: ' + errmsg)
+          dispatch('notifications/addNotification',
+            {
+              title: 'Server Error loading documents',
+              message: errmsg,
+              theme: 'error',
+              timeout: 5000
+            },
+            { root: true }
+          )
+          // commit('registerFailure')
+          return Promise.reject(response.data.errors[0])
+        } else {
+          const docs = response.data.data.listPosts.docs
           commit('updateDocs', docs)
           return Promise.resolve(docs)
         }
