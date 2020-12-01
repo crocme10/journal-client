@@ -28,7 +28,7 @@ function hasChanges() {
 	test -n "$(git status -s .)"
 }
 
-# This returns the version contained in Cargo.tom l
+# This returns the version contained in package.json
 function getRelease() {
   local rel=$(cat package.json | jq '.version' | tr -d \")
   rel="${rel#"${rel%%[![:space:]]*}"}"
@@ -359,5 +359,3 @@ EOF
 
   echo -e "${header}\n\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
 }
-
-getRelease
