@@ -98,7 +98,7 @@ function setRelease() {
   validate_version ${VERSION}
   [[ $? != 0 ]] &&
     { echo "${VERSION} is not valid semantic version"; return 1; } ||
-    { sed -i -e "s/^\s*\"version\"\s*:\s*\".*\"/  \"version\" = \"$VERSION\"/" package.json; }
+    { sed -i -e "s/^\s*\"version\"\s*:\s*\".*\"/  \"version\": \"$VERSION\"/" package.json; }
 
   return 0
 }
@@ -360,3 +360,4 @@ EOF
   echo -e "${header}\n\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
 }
 
+getRelease
