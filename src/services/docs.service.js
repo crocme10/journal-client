@@ -86,6 +86,94 @@ class DocsService {
       })
     })
   }
+
+  docSearch (queryString) {
+    const variables = {
+      query: queryString
+    }
+
+    const query = `query($query: String!) {
+      listDocumentsByQuery(query: $query) {
+        docs {
+          id,
+          front {
+            title,
+            outline,
+            author {
+              fullname,
+              resource
+            },
+            tags,
+            image {
+              title,
+              author {
+                fullname,
+                resource
+              },
+              resource
+            }
+            kind,
+            genre,
+            updatedAt
+          }
+        }
+      }
+    }`
+
+    return axios({
+      method: 'post',
+      headers: standardHeaders(),
+      url: ApiRoutes.JournalGraphQL,
+      data: JSON.stringify({
+        query: query,
+        variables: variables
+      })
+    })
+  }
+
+  tagSearch (tag) {
+    const variables = {
+      tag: tag
+    }
+
+    const query = `query($tag: String!) {
+      listDocumentsByTag(tag: $tag) {
+        docs {
+          id,
+          front {
+            title,
+            outline,
+            author {
+              fullname,
+              resource
+            },
+            tags,
+            image {
+              title,
+              author {
+                fullname,
+                resource
+              },
+              resource
+            }
+            kind,
+            genre,
+            updatedAt
+          }
+        }
+      }
+    }`
+
+    return axios({
+      method: 'post',
+      headers: standardHeaders(),
+      url: ApiRoutes.JournalGraphQL,
+      data: JSON.stringify({
+        query: query,
+        variables: variables
+      })
+    })
+  }
 }
 
 export default new DocsService()

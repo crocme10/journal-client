@@ -20,8 +20,10 @@
           <button v-for='tag in doc.front.tags' :key='tag' @click="tagHandler(tag)" class='bg-gray-300 mt-2 mr-2 px-2 text-xs text-gray-800 rounded-full uppercase font-semibold tracking-wide'>
             {{ tag }}
           </button>
+          <button class='bg-gray-300 mt-2 mr-2 px-2 text-xs text-gray-800 rounded-full uppercase font-semibold tracking-wide'>
+            {{ doc.front.genre }}
+          </button>
         </div>
-        <p class='absolute bottom-0 right-0 mr-4 mb-4 bg-gray-700 px-2 text-xs text-white rounded-full uppercase font-semibold tracking-wide'>{{ doc.front.genre }}</p>
       </div>
     </div>
   </section>

@@ -123,7 +123,7 @@
 </template>
 
 <script>
-import { isOk } from 'result-async'
+import { mapActions } from 'vuex'
 export default {
   name: 'navbar',
   data () {
@@ -132,23 +132,25 @@ export default {
     }
   },
   methods: {
-    searchHandler () {
+    ...mapActions({
+      loadDocSearch: 'docs/loadDocSearch'
+    }),
+    async searchHandler () {
       try {
-        this.$store.dispatch('docs/loadDocSearch', this.search).then(res => {
-          // console.log('is res ok? ' + res)
-          if (isOk(res)) {
-            try {
-              this.$router.push({ name: 'docs' })
-              // console.log('after push')
-            } catch (err) {
-              // console.log('pushing docs error: ' + err)
-            }
-          } else {
-            // console.log('Error: ' + res.error)
+        console.log('dispatching search query ' + this.search)
+        await this.loadDocSearch(this.search)
+        this.$router.push({ name: 'Docs' }).catch(err => {
+          // Ignore the vuex err regarding  navigating to the page they are already on.
+          if (
+            err.name !== 'NavigationDuplicated' &&
+              !err.message.includes('Avoided redundant navigation to current location')
+          ) {
+            // But print any other errors to the console
+            console.log('router error: ' + err)
           }
         })
       } catch (err) {
-        // console.log('search error: ' + err)
+        console.log('search error: ' + err)
       }
     }
   }

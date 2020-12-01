@@ -41,9 +41,19 @@ export default {
         front: {
           title: '',
           outline: '',
-          author: '',
+          author: {
+            fullname: '',
+            resource: ''
+          },
           tags: [],
-          image: '',
+          image: {
+            title: '',
+            author: {
+              fullname: '',
+              resource: ''
+            },
+            resource: ''
+          },
           kind: '',
           genre: ''
         },
