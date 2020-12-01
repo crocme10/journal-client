@@ -6,9 +6,29 @@ class DocsService {
   load () {
     console.log(ApiRoutes.JournalGraphQL)
     const query = `query {
-      documents {
+      listDocuments {
         docs {
-          id, front { title, outline, author, tags, image, kind, genre, updatedAt},
+          id,
+          front {
+            title,
+            outline,
+            author {
+              fullname,
+              resource
+            },
+            tags,
+            image {
+              title,
+              author {
+                fullname,
+                resource
+              },
+              resource
+            }
+            kind,
+            genre,
+            updatedAt
+          }
         }
       }
     }`
@@ -30,7 +50,29 @@ class DocsService {
     const query = `query($id: Uuid!) {
       findDocumentById(id: $id) {
         doc {
-          id, front { title, outline, author, tags, image, kind, genre, updatedAt}, content
+          id,
+          front {
+            title,
+            outline,
+            author {
+              fullname,
+              resource
+            },
+            tags,
+            image {
+              title,
+              author {
+                fullname,
+                resource
+              },
+              resource
+            }
+            kind,
+            genre,
+            createdAt,
+            updatedAt
+          },
+          content
         }
       }
     }`

@@ -5,7 +5,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-12">
       <div v-for='doc in docs' :key='doc.id'>
         <a :href='"/doc/" + doc.id'>
-          <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image'
+          <img :src='"/img/" + doc.front.image.title + ".jpg"' :alt='doc.front.image.title'
             class="object-cover bg-center h-56 w-full rounded mb-5" loading="lazy" />
         </a>
         <h2 class="text-gray-900 text-lg font-semibold mb-2">
@@ -13,7 +13,7 @@
         </h2>
         <p class="text-sm text-gray-600 font-normal mb-3">{{ doc.front.outline }}</p>
         <p class="text-sm text-gray-600 font-normal mb-3">
-          <a href="#" class="text-gray-900 hover:text-purple-700 font-medium">{{ doc.front.author }}</a>
+          <a href="#" class="text-gray-900 hover:text-purple-700 font-medium">{{ doc.front.author.fullname }}</a>
           {{ formatDate(doc) }}
         </p>
         <div class='mt-4 mb-8 flex flex-wrap'>

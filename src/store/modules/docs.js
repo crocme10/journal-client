@@ -38,7 +38,7 @@ const actions = {
           // commit('registerFailure')
           return Promise.reject(response.data.errors[0])
         } else {
-          const docs = response.data.data.documents.docs
+          const docs = response.data.data.listDocuments.docs
           commit('updateDocs', docs)
           return Promise.resolve(docs)
         }

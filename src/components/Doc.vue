@@ -1,9 +1,9 @@
 <template>
   <article class="container mx-auto py-24 px-4" itemid="#" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="w-full md:w-10/12 lg:w-3/4 mx-auto text-left mb-12">
-      <img :src='"/img/" + doc.front.image + ".jpg"' :alt='doc.front.image' class="object-cover bg-center h-64 w-full rounded-lg" />
-      <p class="mt-6 mb-2 text-primary uppercase tracking-wider font-semibold text-xs">Development</p>
-      <h1 class="text-3xl md:text-4xl text-gray-900 leading-tight mb-3 font-bold" itemprop="headline" title="Rise of Tailwind - A Utility First CSS Framework">
+      <img :src='"/img/" + doc.front.image.title + ".jpg"' :alt='doc.front.image.title' class="object-cover bg-center h-64 w-full rounded-lg" />
+      <p class="mt-6 mb-2 text-primary uppercase tracking-wider font-semibold text-xs">Image by <a :href='doc.front.image.author.resource'>{{ doc.front.image.author.fullname }}</a></p>
+      <h1 class="text-3xl md:text-4xl text-gray-900 leading-tight mb-3 font-bold" itemprop="headline">
         {{ doc.front.title }}
       </h1>
       <div class="flex space-x-2 mb-6">
@@ -174,7 +174,7 @@ export default {
   }
 
   /* This is to fix an extra space at the bottom of the code section. */
-  .prose code::after, .prose pre code::after {
+  .prose code::before, .prose code::after, .prose pre code::before, .prose pre code::after {
     display: none;
   }
 
